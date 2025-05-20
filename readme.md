@@ -1,6 +1,6 @@
 # Fake Progress Bar
 
-A silly little rust project based heavily on [Indicatif](https://docs.rs/indicatif/latest/indicatif/) and [CLAP](https://docs.rs/clap/latest/clap/), inspired by a Tumblr post I can't find.
+A silly little rust project based heavily on [Indicatif](https://docs.rs/indicatif/latest/indicatif/) and [CLAP](https://docs.rs/clap/latest/clap/), inspired by a now-deleted Tumblr post.
 
 ## Usage
 

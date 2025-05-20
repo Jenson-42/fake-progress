@@ -1,7 +1,7 @@
 use clap::Parser;
 use indicatif::{ProgressBar, ProgressStyle};
-use std::thread::sleep;
-use std::time::Duration;
+
+use std::{thread::sleep, time::Duration};
 
 /// Script to generate a fake progress bar.
 #[derive(Parser, Debug)]
@@ -29,9 +29,9 @@ struct Args {
 }
 
 fn main() {
-    let mut args = Args::parse();
+    let Args { step_length, mut messages, inital_message, final_message, after_message } = Args::parse();
 
-    let bar = ProgressBar::new(args.messages.len() as u64 * args.step_length);
+    let bar = ProgressBar::new(messages.len() as u64 * step_length);
     bar.set_style(
         ProgressStyle::with_template("  {spinner} [{bar:40.green/red}] {msg}")
             .unwrap()
@@ -41,29 +41,29 @@ fn main() {
 
     println!("\n");
 
-    if let Some(initial_message) = args.inital_message {
+    if let Some(initial_message) = inital_message {
         println!("  {initial_message}");
     }
 
-    if args.messages.len() == 0 {
-        args.messages.push(String::new())
+    if messages.is_empty() {
+        messages = vec![String::new()];
     }
 
-    for message in args.messages.into_iter() {
+    for message in messages.into_iter() {
         bar.set_message(message);
-        for _ in 0..=args.step_length {
+        for _ in 0..=step_length {
             sleep(Duration::from_millis(1));
             bar.inc(1);
         }
     }
 
-    if let Some(final_message) = args.final_message {
+    if let Some(final_message) = final_message {
         bar.set_message(final_message);
     }
 
     bar.finish();
 
-    if let Some(after_message) = args.after_message {
+    if let Some(after_message) = after_message {
         println!("  {after_message}");
     }
 }
